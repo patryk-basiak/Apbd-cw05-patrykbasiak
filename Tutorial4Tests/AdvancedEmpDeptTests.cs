@@ -85,7 +85,7 @@ public class AdvancedEmpDeptTests
     {
         var emps = Database.GetEmps();
 
-        var result = emps.All(emp => emp.Comm > 400);; 
+        var result = emps.Any(emp => emp.Comm > 400); 
         
         Assert.True(result);
     }
@@ -117,7 +117,7 @@ public class AdvancedEmpDeptTests
 
         var result = from emp in emps
             select new {
-                EName = emp.EName,
+                emp.EName,
                 Total = emp.Sal + (emp.Comm ?? 0)
             };
         
@@ -138,9 +138,9 @@ public class AdvancedEmpDeptTests
             join dept in depts on emp.DeptNo equals dept.DeptNo
             where emp.Sal >= grade.Losal && emp.Sal <= grade.Hisal
             select new {
-                EName = emp.EName,
-                DName = dept.DName,
-                Grade = grade.Grade
+                emp.EName,
+                dept.DName,
+                grade.Grade
             };; 
         
         Assert.Contains(result, r => r.EName == "ALLEN" && r.DName == "SALES" && r.Grade == 3);
